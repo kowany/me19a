@@ -1,0 +1,55 @@
+<div *ngIf="persona" class="container main-container animated fadeIn fast">
+  
+  <div class="row">
+    <div class="col-md-4">
+      <img  [src] = "persona.pictureUrl" 
+            [alt] = "persona.nombre"
+            class="img-thumbnail img-fluid animated fadeIn">
+      <div>
+        <a [routerLink] = "[rutaRetorno]" class="btn btn-outline-success">Regresar</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h3>{{ persona.nombre }}</h3>
+      <hr>
+      <p class = "text-justify">
+          <i class="far fa-bell text-blue"></i> Edad: {{ persona.edad }} años
+      </p>
+      <p class = "text-justify">
+          <i class="fas fa-user-friends text-blue"></i>  Conocido como: {{ persona.alias }}
+      </p>
+      <p class = "text-justify">    
+          <i *ngIf="persona.sexo === 'femenino'" class="fas fa-venus text-blue"></i>   
+          <i *ngIf="persona.sexo === 'masculino'" class="fas fa-mars text-blue"></i>   
+          Sexo: {{ persona.sexo }}
+      </p>
+      <p class = "text-justify">
+          <i class="fas fa-user text-blue"></i>  Ocupación: {{ persona.ocupacion }}
+      </p>
+      <p> 
+        <i class="fas fa-map-marker-alt text-blue"></i> Ciudad de los hechos: {{ persona.ciudad }} 
+      </p>
+      <p> 
+        <i class="far fa-calendar-alt text-blue"></i> Fecha de los hechos: {{ persona.fecha | date: 'dd/MM/yyyy' }} 
+      </p>
+      <br>
+      <h5> <i class="fab fa-pagelines text-blue"></i> Biografía</h5>
+      <br>
+      <p>
+        {{ persona.biografia }}
+      </p>
+      <!-- <div>
+        <a [routerLink] = "[rutaRetorno]" class="btn btn-success">Regresar</a>
+      </div> -->
+    </div>
+    <div class="col-md-2">
+      <div class="btn-group pull-right mt-4" >
+        <!-- <a [routerLink] = "['/edit', persona.id, page ]" class="btn btn-primary">Edit</a> -->
+        <button type = "button" class = "btn btn-outline-primary" [routerLink] = "['/edit', persona.id, page ]" >Edit</button>
+        <!-- <a class="btn btn-danger text-white" (click) = "onClickDelete()" >Borrar</a> -->
+        <button type = "button" class = "btn btn-outline-danger" (click) = "onClickDelete()" >Borrar</button>
+      </div>
+    </div>
+  
+  </div>
+</div>

@@ -1,0 +1,8 @@
+/* change the color of active or hovered links */
+// .nav-item:hover .nav-link 
+.nav-item.active .nav-link {
+    font-weight: bold;
+    font-size: 1.0em;
+    color: #FFFF00; // 00CC99 - 7FFF00 - 4AFF00  00FF00
+    // color: #23d160;
+}

@@ -1,1 +1,63 @@
 /* You can add global styles to this file, and also import other style files */
+.main-container{
+    margin-top: 40px;
+  }
+  
+  .puntero{
+      cursor: pointer;
+  }
+      
+  /* Drop Zone */
+  .drop-zone { 
+      border: dotted 3px green; 
+      opacity: 0.5; 
+      color: #666; 
+      text-align: center 
+  }
+  
+  .file-over { 
+      border: dotted 3px dodgerblue; 
+  }
+  
+  .table { 
+      margin-top: 30px; 
+  }
+  
+  .text-green { 
+      color: green; 
+  }
+  .text-blue { 
+      color: rgb(0, 123, 255); 
+  }
+  .text-red {
+      color: red;
+  }
+  
+  /* Animaciones */
+  
+  .animated {
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+  }
+  
+  .fast {
+      -webkit-animation-duration: 0.4s;
+      animation-duration: 0.4s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+  }
+  
+  @keyframes fadeIn {
+      from {
+          opacity: 0;
+      }
+      to {
+          opacity: 1;
+      }
+  }
+  
+  .fadeIn {
+      animation-name: fadeIn;
+  }

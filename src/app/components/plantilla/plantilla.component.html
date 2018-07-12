@@ -1,0 +1,26 @@
+<div *ngIf="personas" >
+  <div *ngIf="personas.length === 0" class="alert alert-warning text-center" role="alert">
+      <h3>No hay registros</h3>
+  </div>
+      
+  <div *ngIf="personas.length != 0" class="alert alert-info text-center" role="alert">
+      <h3>Hay {{ personas.length }} registros</h3>
+  </div>
+
+  <div class="card-columns">
+
+      <div class="card card-backgroundColor" *ngFor="let persona of personas" >
+      <img class="card-img-top img-fluid" [src]="persona.pictureUrl | noimage" alt = "persona.nombre" >
+      <div class="card-body">
+          <h5 class="card-title text-verdecito"> {{ persona.nombre }} </h5>
+          <h6 class="card-title"><i class="fas fa-user text-blue"></i> {{ persona.ocupacion }} </h6>
+          <h6 class="card-title"><i class="far fa-calendar-alt text-blue"></i> {{ persona.edad }} años </h6>
+          <h6 class="card-title"><i class="fas fa-map-marker-alt text-blue"></i> {{ persona.ciudad }} </h6>
+      </div>
+      <div class = "text-right" >
+          <a [routerLink] = "['/detalle', persona.id, route.parent.snapshot._routerState.url ]" class="btn btn-outline-primary btn-sm mb-2 mr-2">Leer más ...</a>
+      </div>
+      </div>
+
+  </div>
+</div>
