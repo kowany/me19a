@@ -1,3 +1,184 @@
-<p>
-  graficos works!
-</p>
+<div *ngIf="cargadoPoblacion" class="row">
+  <div class="col-6">
+      <div class="card">
+          <div class="card-body">
+
+              <div class = "card-title text-center" >
+                  <h4>{{ titlePoblacion }}</h4>
+              </div>
+              <br><br>
+              <app-grafico
+                  [doughnutChartData] = "doughnutChartDataPoblacion"
+                  [doughnutChartLabels] = "doughnutChartLabelsPoblacion"
+                  [doughnutChartType] = "doughnutChartType"
+                  [doughnutChartColors] = "doughnutChartColorsPoblacion"
+              ></app-grafico>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-6" >
+      <div class="card">
+          <div class="card-body">
+              <div class="card-title text-center">
+                  <h4>Tabla por rango de edades</h4>
+              </div>
+              <table class="table table-bordered">
+                      <caption> Total de fallecidos por edades:  
+                          {{ 
+                              doughnutChartDataPoblacion[0] + 
+                              doughnutChartDataPoblacion[1] +
+                              doughnutChartDataPoblacion[2] +
+                              doughnutChartDataPoblacion[3]
+                          }} </caption>
+                  <thead style = "background-color: #007BFF; color: #fff; font-size: 14px;" >
+                      <tr>
+                          <th *ngFor="let label of doughnutChartLabelsPoblacion">{{label}}</th>
+                      </tr>                    
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td class = "text-center" *ngFor="let d of doughnutChartDataPoblacion" > {{ d }}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>        
+
+</div>
+
+<div *ngIf="cargadoOcupacion" class = "row" >    
+      <div class="col-6">
+          <div class="card">
+              <div class="card-body">
+                  <div class = "card-title text-center" >
+                      <h4 >{{ titleOcupacion }}</h4>
+                  </div>
+  
+                  <br><br>
+                  <app-grafico
+                      [doughnutChartData] = "doughnutChartDataOcupacion"
+                      [doughnutChartLabels] = "doughnutChartLabelsOcupacion"
+                      [doughnutChartType] = "doughnutChartType"
+                      [doughnutChartColors] = "doughnutChartColorsOcupacion"
+                  ></app-grafico>
+              </div>
+          </div>
+      </div>
+      <div class="col-6" >
+          <div class="card">
+              <div class="card-body">
+                  <div class="card-title text-center">
+                      <h4>Tabla por ocupación</h4>
+                  </div>
+                  <table class="table table-bordered">
+                          <caption> Total de fallecidos por ocupación laboral:  
+                                  {{ 
+                                      doughnutChartDataOcupacion[0] + 
+                                      doughnutChartDataOcupacion[1] +
+                                      doughnutChartDataOcupacion[2] +
+                                      doughnutChartDataOcupacion[3]
+                                  }} </caption>
+                      <thead style = "background-color: #007BFF; color: #fff;">
+                          <tr>
+                              <th class = " text-center" *ngFor="let label of doughnutChartLabelsOcupacion">{{label}}</th>
+                          </tr>                    
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td class = "text-center" *ngFor="let d of doughnutChartDataOcupacion" > {{ d }}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>        
+      
+  </div>
+
+<div *ngIf="cargadoCiudades" class = "row" >    
+  <div class="col-9">
+      <div class="card">
+          <div class="card-body">
+              <div class = "card-title text-center" >
+                  <h4 >{{ titleCiudades }}</h4>
+              </div>
+
+              <br><br>
+              <app-grafico
+                  [doughnutChartData] = "doughnutChartDataCiudades"
+                  [doughnutChartLabels] = "doughnutChartLabelsCiudades"
+                  [doughnutChartType] = "doughnutChartType"
+                  [doughnutChartColors] = "doughnutChartColorsCiudades"
+              ></app-grafico>
+          </div>
+      </div>
+  </div>
+  <div class="col-3" >
+      <div class="card">
+          <div class="card-body">
+              <div class="card-title text-center">
+                  <h4>Tabla por Ciudad</h4>
+              </div>
+              <table class="table table-bordered">
+                  <thead >
+                      <tr *ngFor="let data of datosCiudad; let i = index">
+                          <!-- <th style = "background-color: #fff; color: #000;" class = "text-center" > {{ i + 1 }} </th> -->
+                          <th style = "background-color: #007BFF; color: #fff;" > {{ data.id }} </th>
+                          <th style = "background-color: #007BFF; color: #fff;" > {{ data.cantidad }} </th>
+                      </tr>                    
+                  </thead>
+                  
+              </table>
+          </div>
+      </div>
+  </div>        
+  
+</div>        
+
+<div *ngIf="cargadoSexo" class = "row" >    
+  <div class="col-6">
+      <div class="card">
+          <div class="card-body">
+              <div class = "card-title text-center" >
+                  <h4 >{{ titleSexo }}</h4>
+              </div>
+
+              <br><br>
+              <app-grafico
+                  [doughnutChartData] = "doughnutChartDataSexo"
+                  [doughnutChartLabels] = "doughnutChartLabelsSexo"
+                  [doughnutChartType] = "doughnutChartType"
+                  [doughnutChartColors] = "doughnutChartColorsSexo"
+              ></app-grafico>
+          </div>
+      </div>
+  </div>
+  <div class="col-6" >
+          <div class="card">
+              <div class="card-body">
+                  <div class="card-title text-center">
+                      <h4>Tabla por género</h4>
+                  </div>
+                  <table class="table table-bordered">
+                      <thead style = "background-color: #007BFF; color: #fff;">
+                          <tr>
+                              <th class = " text-center" *ngFor="let label of doughnutChartLabelsSexo">{{label}}</th>
+                          </tr>                    
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td class = "text-center" *ngFor="let d of doughnutChartDataSexo" > {{ d }}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>        
+  
+</div>
+
+
+  
+

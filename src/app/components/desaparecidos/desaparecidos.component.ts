@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Persona } from './../../models/persona';
+import { DatosService } from './../../services/datos.service';
 
 @Component({
   selector: 'app-desaparecidos',
@@ -7,7 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DesaparecidosComponent implements OnInit {
 
-  constructor() { }
+  personas: Persona[];
+  loading: boolean;
+
+  constructor( private _datosService: DatosService ) {
+
+    this.loading = true;
+
+    this._datosService.getPersonasByCategoria( 'desaparecido' )
+    .subscribe( personas => {
+      this.personas = personas;
+      this.personas = personas.sort( ( a, b ) => {
+        return ( a.nombre.localeCompare( b.nombre ) );
+      });
+
+      this.loading = false;
+
+    });
+
+  }
 
   ngOnInit() {
   }

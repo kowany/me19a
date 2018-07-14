@@ -47,7 +47,6 @@ export class MapaComponent implements OnInit {
     .subscribe( data => {
       // console.log( data );
       data.map( ciudad => {
-        console.log(ciudad);
         const nuevoMarcador = {
           lat: ciudad.location.latitude,
           lng: ciudad.location.longitude,

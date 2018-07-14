@@ -35,7 +35,6 @@ export class DetalleComponent implements OnInit {
                               .subscribe( persona => {
                                 this.persona = persona;
                                 this.persona.id = params['id'];
-                                console.log( this.persona );
                               });
         });
   }
@@ -52,7 +51,7 @@ export class DetalleComponent implements OnInit {
     .then( borrar => {
 
       if ( borrar ) {
-        // this._dataService.borrarImagen( this.persona, this.page );
+        this._dataService.borrarImagen( this.persona, this.page );
       }
     });
   }

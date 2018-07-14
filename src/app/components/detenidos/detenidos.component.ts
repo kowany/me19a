@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DatosService } from './../../services/datos.service';
+import { Persona } from './../../models/persona';
 
 @Component({
   selector: 'app-detenidos',
@@ -7,7 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetenidosComponent implements OnInit {
 
-  constructor() { }
+  loading: boolean;
+  personas: Persona[];
+
+  constructor( private _datosService: DatosService ) {
+
+    this.loading = true;
+
+    this._datosService.getPersonasByCategoria( 'detenido' )
+        .subscribe( personas => {
+          this.personas = personas;
+          this.personas = personas.sort( ( a, b ) => {
+            return ( a.nombre.localeCompare( b.nombre ) );
+          });
+
+          this.loading = false;
+        });
+
+    }
+
 
   ngOnInit() {
   }

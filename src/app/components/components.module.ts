@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './../app-routing.module';
 import { CommonModule } from '../../../node_modules/@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
+import { ChartsModule } from 'ng2-charts';
 
 
 // components
@@ -19,6 +21,7 @@ import { DetalleComponent } from './detalle/detalle.component';
 import { EditComponent } from './edit/edit.component';
 import { PlantillaComponent } from './plantilla/plantilla.component';
 import { LoadingComponent } from './loading/loading.component';
+import { GraficoComponent } from './grafico/grafico.component';
 
 // Pipe
 import { NoimagePipe } from '../pipes/noimage.pipe';
@@ -29,7 +32,9 @@ import { NgDropFilesDirective } from './../directives/ng-drop-files.directive';
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
         AppRoutingModule,
+        ChartsModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyCrwIfz5nhCKhG-Vn6fazSGx_6m4rmIDRU'
         })
@@ -57,7 +62,8 @@ import { NgDropFilesDirective } from './../directives/ng-drop-files.directive';
         PlantillaComponent,
         LoadingComponent,
         NoimagePipe,
-        NgDropFilesDirective
+        NgDropFilesDirective,
+        GraficoComponent
     ],
     providers: [],
 })

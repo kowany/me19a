@@ -71,7 +71,6 @@ export class FallecidosComponent implements OnInit {
 
     this._datosService.getPersonasByCategoria( 'fallecido' )
     .subscribe( personas => {
-      console.log( personas );
       this.personas = personas;
       this.personas = personas.sort( ( a, b ) => {
         return ( a.nombre.localeCompare( b.nombre ) );

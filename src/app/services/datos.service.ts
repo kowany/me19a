@@ -12,10 +12,11 @@ import { Observable } from 'rxjs';
 
 import { tap, map } from 'rxjs/operators';
 
-// import * as _swal from 'sweetalert';
-// import { SweetAlert } from 'sweetalert/typings/core';
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core';
+const swal: SweetAlert = _swal as any;
 // import { ActionSequence } from 'protractor';
-// const swal: SweetAlert = _swal as any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -39,6 +40,7 @@ export class DatosService {
   ocupacion: Observable< any >;
   persona: Observable< Persona >;
   personas: Observable< Persona[] >;
+  getDownloadURL: Observable<any>;
 
   constructor(
     private storage: AngularFireStorage,
@@ -148,74 +150,80 @@ export class DatosService {
     ));
 
 }
-//   updatePersona( persona: Persona, page: string ) {
-//     this.personaDoc = this.db.doc(`victimas/${persona.id}`);
-//     this.personaDoc.update( persona ).then( () => {
-//       const texto = `Datos de ${persona.nombre} actualizados con éxito!`;
-//       swal({
-//         title: 'Registro actualizado!',
-//         text: texto,
-//         icon: 'success'
-//       }).then( () => {
-//         this.router.navigate([`/detalle/${persona.id}/${page}`]);
-//       }) ;
+  updatePersona( persona: Persona, page: string ) {
+    this.personaDoc = this.db.doc(`victimas/${persona.id}`);
+    this.personaDoc.update( persona ).then( () => {
+      const texto = `Datos de ${persona.nombre} actualizados con éxito!`;
+      swal({
+        title: 'Registro actualizado!',
+        text: texto,
+        icon: 'success'
+      }).then( () => {
+        this.router.navigate([`/detalle/${persona.id}/${page}`]);
+      }) ;
 
-//     }) ;
+    }) ;
 
-//   }
+  }
 
-//   guardarPersona( persona: Persona ) {
-//     this.db.collection( `${this.CARPETA}`)
-//             .add( persona ).then( () => {
-//               const texto = `Datos de ${persona.nombre} guardados con éxito!`;
-//               swal({
-//                 title: 'Nuevo registro!',
-//                 text: texto,
-//                 icon: 'success'
-//               });
-//             });
-//   }
+  guardarPersona( persona: Persona ) {
+    this.db.collection( `${this.CARPETA}`)
+            .add( persona ).then( () => {
+              const texto = `Datos de ${persona.nombre} guardados con éxito!`;
+              swal({
+                title: 'Nuevo registro!',
+                text: texto,
+                icon: 'success'
+              });
+            });
+  }
 
-//   borrarImagen( persona: Persona, page: string ) {
-//     this.db.collection(`${this.CARPETA}`).doc( persona.id ).delete().then(() => {
-//       this.storage.ref( `${this.CARPETA}/${persona.pictureName}` ).delete();
-//     }).then( () => {
-//       const texto = `Datos de ${persona.nombre} eliminados con éxito!`;
-//       swal({
-//         title: 'Registro eliminado!',
-//         text: texto,
-//         icon: 'success'
-//       }).then( () => {
-//         this.router.navigate( [page] );
-//       }) ;
+  borrarImagen( persona: Persona, page: string ) {
+    this.db.collection(`${this.CARPETA}`).doc( persona.id ).delete().then(() => {
+      if ( persona.pictureName ) {
+        this.storage.ref( `${this.CARPETA}/${persona.pictureName}` ).delete();
+      }
+    }).then( () => {
+      const texto = `Datos de ${persona.nombre} eliminados con éxito!`;
+      swal({
+        title: 'Registro eliminado!',
+        text: texto,
+        icon: 'success'
+      }).then( () => {
+        this.router.navigate( [page] );
+      }) ;
 
-//     });
-//   }
-//   guardarImagen( imagenes: FileItem[], persona: Persona ) {
+    });
+  }
+  guardarImagen( imagenes: FileItem[], persona: Persona ) {
 
-//     for ( const item of imagenes ) {
-//       item.estaSubiendo = true;
+    for ( const item of imagenes ) {
+      item.estaSubiendo = true;
 
-//       if ( item.progreso >= 100 ) {
-//         continue;
-//       }
-//        const nameArchivo = `${ new Date().getTime() }_${ item.nombreArchivo }`;
-//        const uploadTask: AngularFireUploadTask =
-//        this.storage.upload( `${ this.CARPETA }/${nameArchivo}`, item.archivo );
+      if ( item.progreso >= 100 ) {
+        continue;
+      }
+       const nameArchivo = `${ new Date().getTime() }_${ item.nombreArchivo }`;
+       const filePath = `${ this.CARPETA }/${nameArchivo}`;
+       const fileRef = this.storage.ref(filePath);
+       const uploadTask: AngularFireUploadTask =
+       this.storage.upload( `${filePath}`, item.archivo );
 
-//        uploadTask.snapshotChanges().subscribe(
-//          ( snap => {
-//            item.progreso = ( snap.bytesTransferred / snap.totalBytes ) * 100;
-//           }
-//          ),
-//          ( error => console.log( error ) ),
-//          () => {
-//             persona.pictureUrl = uploadTask.task.snapshot.downloadURL;
-//             persona.pictureName = nameArchivo;
-//             item.estaSubiendo = false;
-//             this.guardarPersona( persona );
-//           }
-//        );
-//     }
-//   }
+       uploadTask.snapshotChanges().subscribe(
+         ( snap => {
+           item.progreso = ( snap.bytesTransferred / snap.totalBytes ) * 100;
+          }
+         ),
+         ( error => console.log( error ) ),
+         () => {
+            fileRef.getDownloadURL().subscribe( resp => {
+              persona.pictureUrl = resp;
+              persona.pictureName = nameArchivo;
+              item.estaSubiendo = false;
+              this.guardarPersona( persona );
+            });
+          }
+       );
+    }
+  }
 }
